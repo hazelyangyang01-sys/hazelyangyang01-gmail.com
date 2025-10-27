@@ -100,7 +100,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-4xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className="p-4 text-2xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
                 >
                   {opt.text}
                 </button>
@@ -119,7 +119,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-4xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className="p-4 text-2xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
                 >
                   {opt.text}
                 </button>
@@ -137,7 +137,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-4xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className="p-4 text-2xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
                 >
                   <span className="pinyin-text">{opt.text}</span>
                 </button>
@@ -158,7 +158,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                     <button
                     key={opt.id}
                     onClick={() => handleOptionClick(opt.id)}
-                    className="p-4 text-4xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                    className="p-4 text-2xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
                     >
                     {opt.text}
                     </button>
@@ -177,7 +177,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                   className="flex flex-col items-center p-2 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:border-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300"
                 >
                   <img src={opt.image} alt={opt.text} className="w-48 h-48 object-cover rounded-md" />
-                  <span className="mt-2 text-3xl">{opt.text}</span>
+                  <span className="mt-2 text-xl">{opt.text}</span>
                 </button>
               ))}
             </div>
@@ -204,7 +204,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                           key={opt.id}
                           draggable
                           onDragStart={(e) => handleSentenceDragStart(e, opt)}
-                          className="p-4 text-4xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-grab active:cursor-grabbing hover:bg-yellow-100 hover:border-yellow-400"
+                          className="p-4 text-2xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-grab active:cursor-grabbing hover:bg-yellow-100 hover:border-yellow-400"
                         >
                           {opt.text}
                         </button>
@@ -220,7 +220,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
               <button
                 key={opt.id}
                 onClick={() => handleOptionClick(opt.id)}
-                className="w-full text-left p-4 text-3xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 transition-colors"
+                className="w-full text-left p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 transition-colors"
               >
                 {opt.text}
               </button>
@@ -251,7 +251,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                                     key={opt.id}
                                     onClick={() => handleLeftOptionClick(opt.id)}
                                     disabled={isMatched}
-                                    className={`p-4 text-4xl text-gray-800 w-48 text-center rounded-lg shadow-md border-2 transition-all 
+                                    className={`p-4 text-2xl text-gray-800 w-48 text-center rounded-lg shadow-md border-2 transition-all 
                                         ${isMatched 
                                             ? 'bg-gray-300 border-gray-400 opacity-50 cursor-not-allowed' 
                                             : 'bg-white border-gray-300 cursor-pointer hover:bg-yellow-100'}
@@ -272,7 +272,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                                     key={opt.id}
                                     onClick={() => handleRightOptionClick(opt.id)}
                                     disabled={isMatched}
-                                    className={`p-4 text-4xl text-gray-800 w-48 text-center rounded-lg shadow-md border-2 transition-colors h-[88px] flex items-center justify-center
+                                    className={`p-4 text-2xl text-gray-800 w-48 text-center rounded-lg shadow-md border-2 transition-colors h-[80px] flex items-center justify-center
                                         ${isMatched
                                             ? 'bg-green-200 border-green-400 cursor-not-allowed'
                                             : 'bg-white border-gray-300 cursor-pointer hover:bg-yellow-100'
