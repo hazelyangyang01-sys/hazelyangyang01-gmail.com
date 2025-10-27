@@ -23,15 +23,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null);
   const [matchedPairs, setMatchedPairs] = useState<Record<string, string>>({}); // { rightId: leftId }
   const [wrongPair, setWrongPair] = useState<string | null>(null);
-  // State for FILL_SENTENCE (click-to-fill on mobile)
-  const [selectedFillSentenceOptionId, setSelectedFillSentenceOptionId] = useState<string | null>(null);
 
   useEffect(() => {
     // Reset states when question changes
     setSelectedLeftId(null);
     setMatchedPairs({});
     setWrongPair(null);
-    setSelectedFillSentenceOptionId(null);
   }, [question]);
   
 
@@ -60,29 +57,6 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
       setTimeout(() => setWrongPair(null), 820);
     }
     setSelectedLeftId(null);
-  };
-
-  // For FILL_SENTENCE (drag-and-drop)
-  const handleSentenceDragStart = (e: React.DragEvent<HTMLButtonElement>, option: Option) => {
-    e.dataTransfer.setData('text/plain', option.id);
-  };
-
-  const handleSentenceDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.currentTarget.classList.add('bg-yellow-100', 'border-yellow-400');
-  };
-
-  const handleSentenceDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.currentTarget.classList.remove('bg-yellow-100', 'border-yellow-400');
-  };
-
-  const handleSentenceDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove('bg-yellow-100', 'border-yellow-400');
-    const optionId = e.dataTransfer.getData('text/plain');
-    if (optionId) {
-      onAnswer(optionId === question.answer, optionId);
-    }
   };
 
 
@@ -187,46 +161,27 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
         );
 
       case QuestionType.FILL_SENTENCE:
-        const handleFillOptionClick = (optionId: string) => {
-          setSelectedFillSentenceOptionId(prevId => (prevId === optionId ? null : optionId));
-        };
-    
-        const handleSentenceDropZoneClick = () => {
-          if (selectedFillSentenceOptionId) {
-            onAnswer(selectedFillSentenceOptionId === question.answer, selectedFillSentenceOptionId);
-            setSelectedFillSentenceOptionId(null);
-          }
-        };
         return (
             <div className="flex flex-col items-center gap-8">
                 <div className="flex items-center justify-center flex-wrap text-3xl md:text-4xl p-4 bg-gray-100 rounded-lg min-h-[80px] text-gray-800 text-center leading-relaxed">
                     <span>{question.data?.sentenceParts?.[0]}</span>
                     <div
-                        onClick={handleSentenceDropZoneClick}
-                        onDragOver={handleSentenceDragOver}
-                        onDragLeave={handleSentenceDragLeave}
-                        onDrop={handleSentenceDrop}
-                        className={`mx-2 font-bold text-4xl w-48 h-16 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center transition-colors ${selectedFillSentenceOptionId ? 'cursor-pointer bg-yellow-100 border-yellow-400' : ''}`}
+                        className="mx-2 font-bold text-4xl w-48 h-16 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center"
                     >
                         (____)
                     </div>
                     <span>{question.data?.sentenceParts?.[1]}</span>
                 </div>
                 <div className="flex flex-row flex-wrap justify-center gap-4">
-                    {question.options.map((opt) => {
-                        const isSelected = selectedFillSentenceOptionId === opt.id;
-                        return (
-                            <button
-                              key={opt.id}
-                              draggable
-                              onClick={() => handleFillOptionClick(opt.id)}
-                              onDragStart={(e) => handleSentenceDragStart(e, opt)}
-                              className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-grab active:cursor-grabbing hover:bg-yellow-100 hover:border-yellow-400 ${isSelected ? 'ring-4 ring-blue-300 border-blue-500' : ''}`}
-                            >
-                              {opt.text}
-                            </button>
-                        );
-                    })}
+                    {question.options.map((opt) => (
+                        <button
+                          key={opt.id}
+                          onClick={() => onAnswer(opt.id === question.answer, opt.id)}
+                          className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-yellow-100 hover:border-yellow-400"
+                        >
+                          {opt.text}
+                        </button>
+                    ))}
                 </div>
             </div>
         );
