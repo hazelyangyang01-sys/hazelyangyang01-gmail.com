@@ -61,6 +61,8 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
 
 
   const renderQuestion = () => {
+    const focusClasses = 'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
+
     switch (question.type) {
       case QuestionType.LISTEN_CHOOSE_WORD:
       case QuestionType.LISTEN_CHOOSE_CHAR:
@@ -68,7 +70,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
           <div className="flex flex-col items-center">
             <button
               onClick={() => speak(question.data?.audioPinyin || '')}
-              className="mb-8 p-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-transform transform hover:scale-110"
+              className={`mb-8 p-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-transform transform hover:scale-110 ${focusClasses}`}
             >
               <SoundIcon className="w-12 h-12" />
             </button>
@@ -77,7 +79,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 ${focusClasses}`}
                 >
                   {opt.text}
                 </button>
@@ -96,7 +98,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 ${focusClasses}`}
                 >
                   {opt.text}
                 </button>
@@ -114,7 +116,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                  className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 ${focusClasses}`}
                 >
                   <span className="pinyin-text">{opt.text}</span>
                 </button>
@@ -135,7 +137,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                     <button
                     key={opt.id}
                     onClick={() => handleOptionClick(opt.id)}
-                    className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400"
+                    className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 ${focusClasses}`}
                     >
                     {opt.text}
                     </button>
@@ -151,7 +153,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(opt.id)}
-                  className="flex flex-col items-center p-2 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:border-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+                  className={`flex flex-col items-center p-2 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:border-yellow-400 ${focusClasses}`}
                 >
                   <img src={opt.image} alt={opt.text} className="w-48 h-48 object-cover rounded-md" />
                   <span className="mt-2 text-lg">{opt.text}</span>
@@ -177,7 +179,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
                         <button
                           key={opt.id}
                           onClick={() => onAnswer(opt.id === question.answer, opt.id)}
-                          className="p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-yellow-100 hover:border-yellow-400"
+                          className={`p-4 text-xl text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-yellow-100 hover:border-yellow-400 ${focusClasses}`}
                         >
                           {opt.text}
                         </button>
@@ -193,7 +195,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, onAnswer 
               <button
                 key={opt.id}
                 onClick={() => handleOptionClick(opt.id)}
-                className="w-full text-left p-4 text-lg text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 transition-colors"
+                className={`w-full text-left p-4 text-lg text-gray-800 bg-white border-2 border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 hover:border-yellow-400 transition-colors ${focusClasses}`}
               >
                 {opt.text}
               </button>
