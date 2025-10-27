@@ -251,7 +251,7 @@ export const LEVELS: Level[] = [
       {
         id: '3-3',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '彩虹',
         data: { sentenceParts: ['天空中出现了一道美丽的', '。'] },
         options: [
@@ -264,7 +264,7 @@ export const LEVELS: Level[] = [
        {
         id: '3-4',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '森林',
         data: { sentenceParts: ['老虎和猴子住在有很多树木的', '里。'] },
         options: [
@@ -278,7 +278,7 @@ export const LEVELS: Level[] = [
       {
         id: '3-5',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '争吵',
         data: { sentenceParts: ['他们两人为了玩具', '起来，谁也不让谁。'] },
         options: [
@@ -292,7 +292,7 @@ export const LEVELS: Level[] = [
       {
         id: '3-6',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '伤心',
         data: { sentenceParts: ['小猫不见了，妹妹觉得很', '。'] },
         options: [
@@ -306,7 +306,7 @@ export const LEVELS: Level[] = [
       {
         id: '3-8',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '比',
         data: { sentenceParts: ['大象', '小狗大很多。'] },
         options: [
@@ -320,7 +320,7 @@ export const LEVELS: Level[] = [
       {
         id: '3-9',
         type: QuestionType.FILL_SENTENCE,
-        prompt: '请把正确的词语拖到括号里。',
+        prompt: '请选择正确的词语。',
         targetWord: '漂亮',
         data: { sentenceParts: ['妈妈穿上这条裙子，真', '！'] },
         options: [
