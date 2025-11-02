@@ -58,3 +58,18 @@ export interface LevelProgress {
     stars: number;
   };
 }
+
+export interface QuestionResult {
+  questionId: string;
+  prompt: string;
+  isCorrect: boolean;
+  studentAnswer: string | string[];
+  correctAnswer: string | string[];
+}
+
+export interface LevelAttempt {
+  levelId: number;
+  timestamp: number;
+  stars: number;
+  questions: QuestionResult[];
+}

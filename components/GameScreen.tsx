@@ -1,22 +1,31 @@
 
+
 import React, { useState, useEffect } from 'react';
-import { Level, Question, QuestionType } from '../types';
+import { Level, Question, QuestionType, QuestionResult } from '../types';
 import QuestionRenderer from './QuestionRenderer';
 import { CheckIcon, CrossIcon, StarIcon } from './icons';
 
 interface GameScreenProps {
   level: Level;
-  onLevelComplete: (levelId: number, stars: number) => void;
+  onLevelComplete: (levelId: number, stars: number, results: QuestionResult[]) => void;
+  onBackToMenu: () => void;
+  isDevMode: boolean;
 }
 
-const GameScreen: React.FC<GameScreenProps> = ({ level, onLevelComplete }) => {
+const GameScreen: React.FC<GameScreenProps> = ({ level, onLevelComplete, onBackToMenu, isDevMode }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [questionResults, setQuestionResults] = useState<QuestionResult[]>([]);
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
 
   const currentQuestion = level.questions[questionIndex];
+
+  useEffect(() => {
+    setQuestionResults([]);
+    setQuestionIndex(0);
+    setShowAnswer(false);
+    setFeedback(null);
+  }, [level]);
 
   const getCorrectAnswerText = (q: Question): React.ReactNode => {
     if (q.type === QuestionType.CHOOSE_CORRECT_PINYIN && typeof q.answer === 'string') {
@@ -32,6 +41,18 @@ const GameScreen: React.FC<GameScreenProps> = ({ level, onLevelComplete }) => {
 
     return Array.isArray(q.answer) ? q.answer.join(', ') : '';
   };
+  
+  const finishLevel = (currentResults: QuestionResult[]) => {
+      const finalCorrectAnswers = currentResults.filter(r => r.isCorrect).length;
+      const accuracy = finalCorrectAnswers / level.questions.length;
+      let stars = 1;
+      if (accuracy === 1) {
+          stars = 3;
+      } else if (accuracy >= 0.7) {
+          stars = 2;
+      }
+      onLevelComplete(level.id, stars, currentResults);
+  };
 
   const handleNext = () => {
     setShowAnswer(false);
@@ -40,46 +61,33 @@ const GameScreen: React.FC<GameScreenProps> = ({ level, onLevelComplete }) => {
     if (questionIndex < level.questions.length - 1) {
       setQuestionIndex(prev => prev + 1);
     } else {
-      // Level finished
-      const accuracy = correctAnswers / level.questions.length;
-      let stars = 1;
-      if (accuracy === 1) {
-          stars = 3;
-      } else if (accuracy >= 0.7) {
-          stars = 2;
-      }
-      onLevelComplete(level.id, stars);
+      finishLevel(questionResults);
     }
   };
   
   const handleAnswer = (isCorrect: boolean, answer: string | string[]) => {
-    if (isCorrect) {
-      setCorrectAnswers(prev => prev + 1);
-      setFeedback('correct');
-    } else {
-      setFeedback('incorrect');
-    }
+    const newResult: QuestionResult = {
+        questionId: currentQuestion.id,
+        prompt: currentQuestion.prompt,
+        isCorrect,
+        studentAnswer: answer,
+        correctAnswer: currentQuestion.answer,
+    };
+    const updatedResults = [...questionResults, newResult];
+    setQuestionResults(updatedResults);
 
-    // Special case for MATCH_MEANING which auto-advances after feedback
-    if (currentQuestion.id === '3-1') {
+    setFeedback(isCorrect ? 'correct' : 'incorrect');
+
+    if (currentQuestion.type === QuestionType.MATCH_MEANING) {
       setTimeout(() => {
         setFeedback(null);
         if (questionIndex < level.questions.length - 1) {
           setQuestionIndex(prev => prev + 1);
         } else {
-          // Level finished
-          const accuracy = (correctAnswers + (isCorrect ? 1: 0)) / level.questions.length;
-          let stars = 1;
-          if (accuracy === 1) {
-              stars = 3;
-          } else if (accuracy >= 0.7) {
-              stars = 2;
-          }
-          onLevelComplete(level.id, stars);
+          finishLevel(updatedResults);
         }
       }, 1200);
     } else {
-      // For all other questions, show feedback, then show the answer and next button.
       setTimeout(() => {
         setFeedback(null);
         setShowAnswer(true);
@@ -88,7 +96,16 @@ const GameScreen: React.FC<GameScreenProps> = ({ level, onLevelComplete }) => {
   };
 
   return (
-    <div className={`w-full h-full flex flex-col items-center justify-center p-4 transition-colors duration-500 ${level.bgColor}`}>
+    <div className={`w-full h-full flex flex-col items-center justify-center p-4 transition-colors duration-500 ${level.bgColor} relative`}>
+      {isDevMode && (
+        <button
+          onClick={onBackToMenu}
+          className="absolute top-4 left-4 bg-gray-700 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg opacity-50 hover:opacity-100 transition-opacity z-20"
+          aria-label="Back to Menu (Dev)"
+        >
+          &lt; 返回主菜单
+        </button>
+      )}
       <div className="w-full max-w-6xl mx-auto">
         {/* Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-4 mb-4 shadow-inner">

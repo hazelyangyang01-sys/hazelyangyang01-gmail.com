@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { WORDS, LEVELS } from '../data/gameData';
 import { LevelProgress } from '../types';
@@ -6,6 +8,8 @@ import { GemIcon, StarIcon } from './icons';
 interface MainMenuProps {
   onStartLevel: (levelId: number) => void;
   levelProgress: LevelProgress;
+  onShowDeveloperDashboard: () => void;
+  isDevMode: boolean;
 }
 
 const rainbowColors = [
@@ -19,7 +23,7 @@ const rainbowColors = [
 ];
 
 
-const MainMenu: React.FC<MainMenuProps> = ({ onStartLevel, levelProgress }) => {
+const MainMenu: React.FC<MainMenuProps> = ({ onStartLevel, levelProgress, onShowDeveloperDashboard, isDevMode }) => {
     // FIX: Explicitly type the accumulator in the reduce function to avoid it being inferred as 'unknown'.
     const totalStars = Object.values(levelProgress).reduce((sum: number, p: LevelProgress[number]) => sum + p.stars, 0);
 
@@ -27,7 +31,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onStartLevel, levelProgress }) => {
     const completedCount = Object.values(levelProgress).filter((p: LevelProgress[number]) => p.completed).length;
 
     return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-cyan-100 to-blue-200">
+    <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-cyan-100 to-blue-200 relative">
       <div className="text-center mb-8">
         <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
           七彩词语寻宝
@@ -74,7 +78,16 @@ const MainMenu: React.FC<MainMenuProps> = ({ onStartLevel, levelProgress }) => {
               ))}
           </div>
       </div>
-
+      
+      {isDevMode && (
+        <button
+          onClick={onShowDeveloperDashboard}
+          className="absolute bottom-4 right-4 bg-gray-700 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg opacity-50 hover:opacity-100 transition-opacity"
+          aria-label="Developer Dashboard"
+        >
+          DEV
+        </button>
+      )}
     </div>
   );
 };
